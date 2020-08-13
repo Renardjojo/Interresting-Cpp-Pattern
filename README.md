@@ -2,17 +2,17 @@
 Description of pattern that I discover. Source, brief and use examples
 
 ## Summary :
-- [SFINAE](##SFINAE "SFINAE pattern")
-- [CRTP](##CRTP "CRTP pattern")
-- [Strong_type](##Strong_type "Type_strong pattern")
+- [SFINAE](##_SFINAE(Substitution-Failure-is-not-an-Error): "SFINAE pattern")
+- [CRTP](##_CRTP(Curiously-recurring-template-pattern): "CRTP pattern")
+- [Strong_type](##_Strong_type: "Type_strong pattern")
 
-## SFINAE : 
+## SFINAE(Substitution-Failure-is-not-an-Error):
 ### Brief :
 
 ### Sources : 
 
 
-## CRTP :
+## CRTP(Curiously-recurring-template-pattern):
 ### Brief :
 It's a template pattern that allow to avoid function copy on inherrance. CRTP is not static virtual and do not avoid virtual implemantion. Don't use CRTP, which is not dynamic polymorphism, to create dynamic polymorphism like :
 ```cpp
