@@ -5,6 +5,7 @@ Description of pattern that I discover. Source, brief and use examples
 - [SFINAE](##_SFINAE(Substitution-Failure-is-not-an-Error): "SFINAE pattern")
 - [CRTP](##_CRTP(Curiously-recurring-template-pattern): "CRTP pattern")
 - [Strong_type](##_Strong_type: "Type_strong pattern")
+- [Phantom](##_Phantom: "Phantom pattern")
 
 ## SFINAE(Substitution-Failure-is-not-an-Error):
 ### Brief :
@@ -166,3 +167,29 @@ foo(3s); /*Implicit conversion from second to millisecond*/
 ### Sources : 
 - https://www.youtube.com/watch?v=P32hvk8b13M : Chrono cpp cone
 - https://foonathan.net/2016/10/strong-typedefs/ : blog type_strong library
+
+
+
+## Phantom : 
+### Brief :
+Phantom is a type use on template that is never use to define internal method type. It's only type to create a different class type :
+
+```cpp
+
+template<typename T, typename Phantom>
+struct Duration
+{
+  explicit Duration(const T& in_duration) { [...] }
+}
+
+Duration<uint32_t, Seconds> /*Seconds is the phantom type*/
+Duration<uint32_t, Hours>   /*Hours is the phantom type*/
+
+/*Implementation of both duration is strictly identical*/
+```
+With this solution, Duration<uint32_t, Seconds> != Duration<uint32_t, Hours> 
+
+
+### Sources : 
+- https://www.youtube.com/watch?v=ojZbFIQSdl8&feature=youtu.be&t=24m9s : CppCon 2016: Ben Deane “Using Types Effectively"
+- https://medium.com/@snowp/transparent-phantom-types-in-c-de6ac5bed1d1 : article "Transparent Phantom Types in C++" by Snow Pettersen
