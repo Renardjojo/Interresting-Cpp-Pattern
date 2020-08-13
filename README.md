@@ -152,7 +152,7 @@ int bmi(meter height, kilogram weight);
 auto result = bmi(w, h); /*Error w and h is not the same but it compile*/
 ```
 
-Because of strong_type you can do implicit conversion like Chrono library :
+Thanks to strong_type you can do implicit conversion like Chrono library :
 
 ```cpp
 void foo (milliseconds d)
