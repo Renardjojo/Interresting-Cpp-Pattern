@@ -149,7 +149,18 @@ using kilogram = int;
 
 int bmi(meter height, kilogram weight);
 
-auto result = bmi(w, h);
+auto result = bmi(w, h); /*Error w and h is not the same but it compile*/
+```
+
+Because of strong_type you can do implicit conversion like Chrono library :
+
+```cpp
+void foo (milliseconds d)
+{
+    std::cout << d.count() << "ms\n";
+}
+
+foo(3s); /*Implicit conversion from second to millisecond*/
 ```
 
 ### Sources : 
