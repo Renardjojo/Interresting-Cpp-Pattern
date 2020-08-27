@@ -11,6 +11,7 @@ Description of pattern that I discover. Source, brief and use examples
 ### Brief :
 
 ### Sources : 
+- http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1219r1.html : Homogeneous variadic function parameters (speack about variadic SFINAE) by James Touton
 
 
 ## CRTP(Curiously-recurring-template-pattern):
