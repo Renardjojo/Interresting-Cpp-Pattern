@@ -12,18 +12,6 @@ Description of pattern that I discover. Source, brief and use examples
 
 ## Bool bit field:
 ### Brief :
-
-
-
-
-
-### Sources : 
-- https://en.cppreference.com/w/cpp/language/bit_field : c++ reference link
-- https://www.learncpp.com/cpp-tutorial/bit-manipulation-with-bitwise-operators-and-bit-masks/ : Article with more example of bit mask
-
-
-## SFINAE(Substitution-Failure-is-not-an-Error):
-### Brief :
 When multiple boolean is store on structur, these boolean size 1 bytes instead of 1 bit one behind the other. In example :
 ```cpp
 #include <iostream>
@@ -58,15 +46,16 @@ int main()
 For boolean it's the same ! 
 ```cpp
 #include <iostream>
+
 struct MBool{
   unsigned char b : 8;
 
   void setBool(char index, bool val)
   {
     if (val)
-        b &= (1 << index);
+        b |= (1 << index); // OR
     else
-        b |= (1 << index);
+        b &= ~(1 << index); //AND with NOT
   }
 
   bool getBool(char index)
@@ -77,16 +66,30 @@ struct MBool{
 
 int main (){
     MBool bf;
-    std::cout << sizeof(MBool) << '\n';
+    std::cout << sizeof(MBool) << '\n'; //output : 1
 
-    bf.b = 0b11111111;
-    std::cout << bf.getBool(4) << '\n';
+    bf.b = 0b00000000;
+    std::cout << bf.getBool(4) << '\n'; //output : 0
+
+    bf.setBool(4, true);
+    std::cout << bf.getBool(4) << '\n'; //output : 1
+
     bf.setBool(4, false);
-    std::cout << bf.getBool(4) << '\n';
+    std::cout << bf.getBool(4) << '\n'; //output : 0
     
     return 0;
 }
 ```
+
+
+### Sources : 
+- https://docs.microsoft.com/fr-fr/cpp/cpp/cpp-bit-fields?view=vs-2019 : Great example with date
+- https://en.cppreference.com/w/cpp/language/bit_field : c++ reference link
+- https://www.learncpp.com/cpp-tutorial/bit-manipulation-with-bitwise-operators-and-bit-masks/ : Article with more example of bit mask
+
+
+## SFINAE(Substitution-Failure-is-not-an-Error):
+### Brief :
 
 ### Note :
 In c++ 2020 SFINAE can be replace by "concept"
