@@ -2,13 +2,94 @@
 Description of pattern that I discover. Source, brief and use examples
 
 ## Summary :
+- [Bool bit field](##_Bool_bit_field: "Bool bit field pattern")
+- [RAII](##_RAII(Resource acquisition is initialization): "RAII pattern")
+- [RVO](##_RVO(Return Value Optimization): "RVO pattern")
 - [SFINAE](##_SFINAE(Substitution-Failure-is-not-an-Error): "SFINAE pattern")
 - [CRTP](##_CRTP(Curiously-recurring-template-pattern): "CRTP pattern")
 - [Strong_type](##_Strong_type: "Type_strong pattern")
 - [Phantom](##_Phantom: "Phantom pattern")
 
+## Bool bit field:
+### Brief :
+
+
+
+
+
+### Sources : 
+- https://en.cppreference.com/w/cpp/language/bit_field : c++ reference link
+- https://www.learncpp.com/cpp-tutorial/bit-manipulation-with-bitwise-operators-and-bit-masks/ : Article with more example of bit mask
+
+
 ## SFINAE(Substitution-Failure-is-not-an-Error):
 ### Brief :
+When multiple boolean is store on structur, these boolean size 1 bytes instead of 1 bit one behind the other. In example :
+```cpp
+#include <iostream>
+
+struct MBool{
+  bool i, j, k, l, m, n, o, p;
+};
+
+int main (){
+    std::cout << sizeof(MBool); //output : 8 (and not 1 octet !)
+    return 0;
+}
+```
+
+This technique can be critical if you want optimize your code because of size of cache line and data bus on your harward. To avoid this problem, use bit field. Bit fied allow user to specifie the number of bit of a type. For example if you must have int in only 12bit with a specifical maximum value, you can decalre int as a bit field like that : 
+```cpp
+#include <iostream>
+struct Uint3 {
+ // three-bit unsigned field,
+ // allowed values are 0...7
+ unsigned int b : 3;
+};
+int main()
+{
+    Uint3 u = {6};
+    ++u.b; // store the value 7 in the bit field
+    std::cout << u.b << '\n'; //output : 7
+    ++u.b; // the value 8 does not fit in this bit field
+    std::cout << u.b << '\n'; //output : 0
+}
+```
+For boolean it's the same ! 
+```cpp
+#include <iostream>
+struct MBool{
+  unsigned char b : 8;
+
+  void setBool(char index, bool val)
+  {
+    if (val)
+        b &= (1 << index);
+    else
+        b |= (1 << index);
+  }
+
+  bool getBool(char index)
+  {
+    return b & (1 << index);
+  }
+};
+
+int main (){
+    MBool bf;
+    std::cout << sizeof(MBool) << '\n';
+
+    bf.b = 0b11111111;
+    std::cout << bf.getBool(4) << '\n';
+    bf.setBool(4, false);
+    std::cout << bf.getBool(4) << '\n';
+    
+    return 0;
+}
+```
+
+### Note :
+In c++ 2020 SFINAE can be replace by "concept"
 
 ### Sources : 
 - http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1219r1.html : Homogeneous variadic function parameters (speack about variadic SFINAE) by James Touton
