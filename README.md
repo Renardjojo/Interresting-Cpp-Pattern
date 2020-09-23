@@ -9,6 +9,7 @@ Description of pattern that I discover. Source, brief and use examples
 - [CRTP](##_CRTP(Curiously-recurring-template-pattern): "CRTP pattern")
 - [Strong_type](##_Strong_type: "Type_strong pattern")
 - [Phantom](##_Phantom: "Phantom pattern")
+- [Template expression](##_Template_expression: "Template expression")
 
 ## Bool bit field:
 ### Brief :
@@ -80,7 +81,6 @@ int main (){
     return 0;
 }
 ```
-
 
 ### Sources : 
 - https://docs.microsoft.com/fr-fr/cpp/cpp/cpp-bit-fields?view=vs-2019 : Great example with date
