@@ -3,8 +3,8 @@ Description of pattern that I discover. Source, brief and use examples
 
 ## Summary :
 - [Bool wrapping](##_Bool_wrapping: "Bool wrapping")
-- [RAII](##_RAII(Resource acquisition is initialization): "RAII pattern")
-- [RVO](##_RVO(Return Value Optimization): "RVO pattern")
+- [RAII](##_RAII(Resource_acquisition_is_initialization): "RAII pattern")
+- [RVO](##_RVO(Return_Value_Optimization): "RVO pattern")
 - [SFINAE](##_SFINAE(Substitution-Failure-is-not-an-Error): "SFINAE pattern")
 - [CRTP](##_CRTP(Curiously-recurring-template-pattern): "CRTP pattern")
 - [Strong_type](##_Strong_type: "Type_strong pattern")
