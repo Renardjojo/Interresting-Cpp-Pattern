@@ -2,7 +2,7 @@
 Description of pattern that I discover. Source, brief and use examples
 
 ## Summary :
-- [Bool bit field](##_Bool_bit_field: "Bool bit field pattern")
+- [Bool wrapping](##_Bool_wrapping: "Bool wrapping")
 - [RAII](##_RAII(Resource acquisition is initialization): "RAII pattern")
 - [RVO](##_RVO(Return Value Optimization): "RVO pattern")
 - [SFINAE](##_SFINAE(Substitution-Failure-is-not-an-Error): "SFINAE pattern")
@@ -11,81 +11,40 @@ Description of pattern that I discover. Source, brief and use examples
 - [Phantom](##_Phantom: "Phantom pattern")
 - [Template expression](##_Template_expression: "Template expression")
 
-## Bool bit field:
+## Bool wrapping:
 ### Brief :
 When multiple boolean is store on structur, these boolean size 1 bytes instead of 1 bit one behind the other. In example :
-```cpp
-#include <iostream>
 
-struct MBool{
-  bool i, j, k, l, m, n, o, p;
+```cpp
+#include <string>
+#include <iostream>
+#include <vector>
+ 
+class t1
+{
+    bool a, b, c, d, e, f, g, h, i;
 };
 
-int main (){
-    std::cout << sizeof(MBool); //output : 8 (and not 1 octet !)
-    return 0;
-}
-```
-
-This technique can be critical if you want optimize your code because of size of cache line and data bus on your harward. To avoid this problem, use bit field. Bit fied allow user to specifie the number of bit of a type. For example if you must have int in only 12bit with a specifical maximum value, you can decalre int as a bit field like that : 
-```cpp
-#include <iostream>
-struct Uint3 {
- // three-bit unsigned field,
- // allowed values are 0...7
- unsigned int b : 3;
+class t2
+{
+    bool a : 1;
+    bool b : 1;
+    bool c : 1;
+    bool d : 1;
+    bool e : 1;
+    bool f : 1;
+    bool g : 1;
+    bool h : 1;
 };
+
 int main()
 {
-    Uint3 u = {6};
-    ++u.b; // store the value 7 in the bit field
-    std::cout << u.b << '\n'; //output : 7
-    ++u.b; // the value 8 does not fit in this bit field
-    std::cout << u.b << '\n'; //output : 0
-}
-```
-For boolean it's the same ! 
-```cpp
-#include <iostream>
-
-struct MBool{
-  unsigned char b : 8;
-
-  void setBool(char index, bool val)
-  {
-    if (val)
-        b |= (1 << index); // OR
-    else
-        b &= ~(1 << index); //AND with NOT
-  }
-
-  bool getBool(char index)
-  {
-    return b & (1 << index);
-  }
-};
-
-int main (){
-    MBool bf;
-    std::cout << sizeof(MBool) << '\n'; //output : 1
-
-    bf.b = 0b00000000;
-    std::cout << bf.getBool(4) << '\n'; //output : 0
-
-    bf.setBool(4, true);
-    std::cout << bf.getBool(4) << '\n'; //output : 1
-
-    bf.setBool(4, false);
-    std::cout << bf.getBool(4) << '\n'; //output : 0
-    
-    return 0;
+    std::cout << sizeof(t1) << std::endl; //8
+    std::cout << sizeof(t2) << std::endl; //1
 }
 ```
 
-### Sources : 
-- https://docs.microsoft.com/fr-fr/cpp/cpp/cpp-bit-fields?view=vs-2019 : Great example with date
-- https://en.cppreference.com/w/cpp/language/bit_field : c++ reference link
-- https://www.learncpp.com/cpp-tutorial/bit-manipulation-with-bitwise-operators-and-bit-masks/ : Article with more example of bit mask
+### Sources :
 
 
 ## SFINAE(Substitution-Failure-is-not-an-Error):
