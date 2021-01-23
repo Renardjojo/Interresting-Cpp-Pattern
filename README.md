@@ -3,13 +3,14 @@ Description of pattern that I discover. Source, brief and use examples
 
 ## Summary :
 - [Bool wrapping](##_Bool_wrapping: "Bool wrapping")
-- [RAII](##_RAII(Resource_acquisition_is_initialization): "RAII pattern")
-- [RVO](##_RVO(Return_Value_Optimization): "RVO pattern")
+- [RAII (WIP)](##_RAII(Resource_acquisition_is_initialization): "RAII pattern")
+- [RVO (WIP)](##_RVO(Return_Value_Optimization): "RVO pattern")
 - [SFINAE](##_SFINAE(Substitution-Failure-is-not-an-Error): "SFINAE pattern")
 - [CRTP](##_CRTP(Curiously-recurring-template-pattern): "CRTP pattern")
 - [Strong_type](##_Strong_type: "Type_strong pattern")
 - [Phantom](##_Phantom: "Phantom pattern")
-- [Template expression](##_Template_expression: "Template expression")
+- [Template expression (WIP)](##_Template_expression: "Template expression")
+- [Familly generator](##_Familly_generator: "Familly generator")
 
 ## Bool wrapping:
 ### Brief :
@@ -233,7 +234,38 @@ Duration<uint32_t, Hours>   /*Hours is the phantom type*/
 ```
 With this solution, Duration<uint32_t, Seconds> != Duration<uint32_t, Hours> 
 
-
 ### Sources : 
 - https://www.youtube.com/watch?v=ojZbFIQSdl8&feature=youtu.be&t=24m9s : CppCon 2016: Ben Deane “Using Types Effectively"
 - https://medium.com/@snowp/transparent-phantom-types-in-c-de6ac5bed1d1 : article "Transparent Phantom Types in C++" by Snow Pettersen
+
+
+## Family generator
+Familly generator allow you to create ID for a specific type
+
+```cpp
+#include <iostream>
+ 
+class family {
+    static std::size_t identifier() noexcept {
+        static std::size_t value = 0;
+        return value++;
+    }
+
+public:
+    template<typename>
+    static std::size_t type() noexcept {
+        static const std::size_t value = identifier();
+        return value;
+    }
+};
+
+int main()
+{
+    std::cout << family::type<int>() << std::endl; //0
+    std::cout << family::type<float>() << std::endl; //1
+    std::cout << family::type<int>() << std::endl; //0
+    std::cout << family::type<unsigned int>() << std::endl //2;
+}
+ ```
+### Sources :
+- https://skypjack.github.io/2019-02-14-ecs-baf-part-1/ : The first article thhat I see and discuss about it
