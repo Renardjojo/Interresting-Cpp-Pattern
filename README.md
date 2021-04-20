@@ -2,6 +2,7 @@
 Description of pattern that I discover. Source, brief and use examples
 
 ## Summary :
+- [SoA or AoS](##_SoA_or_AoS: "SoA or AoS")
 - [Bool wrapping](##_Bool_wrapping: "Bool wrapping")
 - [RAII (WIP)](##_RAII(Resource_acquisition_is_initialization): "RAII pattern")
 - [RVO (WIP)](##_RVO(Return_Value_Optimization): "RVO pattern")
@@ -11,6 +12,16 @@ Description of pattern that I discover. Source, brief and use examples
 - [Phantom](##_Phantom: "Phantom pattern")
 - [Template expression (WIP)](##_Template_expression: "Template expression")
 - [Familly generator](##_Familly_generator: "Familly generator")
+
+
+## Bool wrapping:
+### Brief :
+Must we use Array of struct or struct of array ? 
+Struct of array should be better option for system that must be upgrade like Mesh (position/Uv/normal or Position/Color/normal ?)
+### Sources :
+- https://www.bfilipek.com/2014/04/flexible-particle-system-container.html : Great article about particle system that use example of AoS confronting to SoA
+
+
 
 ## Bool wrapping:
 ### Brief :
